@@ -1,0 +1,16 @@
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  select {
+    margin-left: 8px;
+  }
+  

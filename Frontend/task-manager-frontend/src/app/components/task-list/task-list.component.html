@@ -1,0 +1,39 @@
+
+<h2>Task List</h2>
+
+<label for="statusFilter">Filter by status:</label>
+<select
+  id="statusFilter"
+  [(ngModel)]="selectedStatusFilter"
+  (change)="filterTasks()"
+>
+  <option value="">All</option>
+  <option value="TO_DO">TO DO</option>
+  <option value="IN_PROGRESS">IN PROGRESS</option>
+  <option value="DONE">DONE</option>
+</select>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Created At</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of filteredTasks">
+      <td>{{ task.title }}</td>
+      <td>{{ task.status }}</td>
+      <td>{{ task.createdAt | date: 'short' }}</td>
+      <td>
+        <button (click)="editTask(task.id)">Edit</button>
+        <button (click)="deleteTask(task.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- In task-list.component.html -->
+<button (click)="createTask()">Create Task</button>
