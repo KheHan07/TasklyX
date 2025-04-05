@@ -1,0 +1,24 @@
+<h2>Register</h2>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Username</label>
+    <input formControlName="username" />
+  </div>
+  <div>
+    <label>Password</label>
+    <input formControlName="password" type="password" />
+  </div>
+  <button type="submit" [disabled]="registerForm.invalid">Register</button>
+</form>
+
+<div style="color: green" *ngIf="successMessage">
+  {{ successMessage }}
+</div>
+<div style="color: red" *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>
+
+<p>
+  Already have an account?
+  <a [routerLink]="['/login']">Login here</a>.
+</p>

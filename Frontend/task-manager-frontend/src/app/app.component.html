@@ -1,5 +1,6 @@
-
-<h1>{{ title }}</h1>
+<h1>Task Manager</h1>
+<nav>
+  <button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+</nav>
 <hr />
-
 <router-outlet></router-outlet>

@@ -1,21 +1,20 @@
-
+// src/app/components/task-form/task-form.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
-  Validators,
   ReactiveFormsModule,
+  Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Task, TaskService } from '../../services/task.service';
+import { TaskService, Task } from '../../services/task.service';
 
 @Component({
   selector: 'app-task-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.css']
+  templateUrl: './task-form.component.html'
 })
 export class TaskFormComponent implements OnInit {
   taskForm!: FormGroup;
@@ -24,60 +23,57 @@ export class TaskFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private taskService: TaskService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private taskService: TaskService
   ) {}
 
-  ngOnInit(): void {
-    // Check if there's an ID in the URL => editing mode
+  ngOnInit() {
     this.taskId = this.route.snapshot.paramMap.get('id') || undefined;
     this.isEditMode = !!this.taskId;
 
-    // Initialize the form
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
       description: [''],
       status: ['TO_DO']
     });
 
-    // If editing, load the existing task and populate the form
     if (this.isEditMode && this.taskId) {
-      this.taskService.getTaskById(this.taskId).subscribe({
-        next: (task) => {
-          this.taskForm.patchValue({
-            title: task.title,
-            description: task.description,
-            status: task.status
-          });
-        },
-        error: (err) => console.error(err)
+      // We must call "update" approach
+      // But first let's fetch the existing to prefill
+      // Actually we can't do a direct GET. We'll do a "fetch all" and find it
+      // or we might do a separate route. Let's skip for brevity. We'll do "All tasks" then find local.
+      // For simplicity, let's do "All tasks" in real scenario, or call a "fetchSingle" approach.
+      // We'll do a quick approach:
+      this.taskService.getAllTasks().subscribe({
+        next: tasks => {
+          const t = tasks.find(x => x.id === this.taskId);
+          if (t) {
+            this.taskForm.patchValue({
+              title: t.title,
+              description: t.description,
+              status: t.status
+            });
+          }
+        }
       });
     }
   }
 
-  onSubmit(): void {
-    if (this.taskForm.invalid) {
-      return;
-    }
+  onSubmit() {
+    if (this.taskForm.invalid) return;
 
-    const taskData: Task = {
-      title: this.taskForm.value.title,
-      description: this.taskForm.value.description,
-      status: this.taskForm.value.status
-    };
+    const taskData: Task = { ...this.taskForm.value };
 
     if (this.isEditMode && this.taskId) {
-      // Update existing task
       this.taskService.updateTask(this.taskId, taskData).subscribe({
         next: () => this.router.navigate(['/tasks']),
-        error: (err) => console.error(err)
+        error: err => console.error('Update error', err)
       });
     } else {
-      // Create new task
       this.taskService.createTask(taskData).subscribe({
         next: () => this.router.navigate(['/tasks']),
-        error: (err) => console.error(err)
+        error: err => console.error('Create error', err)
       });
     }
   }

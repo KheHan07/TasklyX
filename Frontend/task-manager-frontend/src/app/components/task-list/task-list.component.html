@@ -1,12 +1,8 @@
-
+<!-- src/app/components/task-list/task-list.component.html -->
 <h2>Task List</h2>
 
-<label for="statusFilter">Filter by status:</label>
-<select
-  id="statusFilter"
-  [(ngModel)]="selectedStatusFilter"
-  (change)="filterTasks()"
->
+<label>Status Filter:</label>
+<select [(ngModel)]="selectedStatusFilter" (change)="filterTasks()">
   <option value="">All</option>
   <option value="TO_DO">TO DO</option>
   <option value="IN_PROGRESS">IN PROGRESS</option>
@@ -26,7 +22,7 @@
     <tr *ngFor="let task of filteredTasks">
       <td>{{ task.title }}</td>
       <td>{{ task.status }}</td>
-      <td>{{ task.createdAt | date: 'short' }}</td>
+      <td>{{ task.createdAt | date:'short' }}</td>
       <td>
         <button (click)="editTask(task.id)">Edit</button>
         <button (click)="deleteTask(task.id)">Delete</button>
@@ -35,5 +31,5 @@
   </tbody>
 </table>
 
-<!-- In task-list.component.html -->
-<button (click)="createTask()">Create Task</button>
+<button (click)="router.navigate(['/create-task'])">Create Task</button>
+

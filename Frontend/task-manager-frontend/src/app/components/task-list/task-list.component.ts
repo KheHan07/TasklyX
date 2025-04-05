@@ -1,63 +1,60 @@
-
+// src/app/components/task-list/task-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Task, TaskService } from '../../services/task.service';
 import { Router } from '@angular/router';
+import { Task, TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.css']
+  templateUrl: './task-list.component.html'
 })
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
   selectedStatusFilter = '';
 
-  constructor(public router: Router, private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    public router: Router // <-- public instead of private
+  ) {}
+  
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadTasks();
   }
 
-  createTask(): void {
-    this.router.navigate(['/create-task']);
-  }
-
-  loadTasks(): void {
+  loadTasks() {
     this.taskService.getAllTasks().subscribe({
       next: (data) => {
         this.tasks = data;
         this.filteredTasks = data;
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error('Error loading tasks', err)
     });
   }
 
-  filterTasks(): void {
+  filterTasks() {
     if (this.selectedStatusFilter) {
-      this.filteredTasks = this.tasks.filter(
-        (t) => t.status === this.selectedStatusFilter
-      );
+      this.filteredTasks = this.tasks.filter(t => t.status === this.selectedStatusFilter);
     } else {
       this.filteredTasks = this.tasks;
     }
   }
 
-  editTask(taskId?: string): void {
-    if (taskId) {
-      this.router.navigate(['/edit-task', taskId]);
+  editTask(id?: string) {
+    if (id) {
+      this.router.navigate(['/edit-task', id]);
     }
   }
 
-  deleteTask(taskId?: string): void {
-    if (!taskId) return;
-    this.taskService.deleteTask(taskId).subscribe({
+  deleteTask(id?: string) {
+    if (!id) return;
+    this.taskService.deleteTask(id).subscribe({
       next: () => this.loadTasks(),
-      error: (err) => console.error(err)
+      error: (err) => console.error('Error deleting task', err)
     });
   }
 }

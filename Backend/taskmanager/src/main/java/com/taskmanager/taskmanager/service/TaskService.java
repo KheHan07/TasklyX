@@ -10,42 +10,49 @@ import java.util.Optional;
 
 @Service
 public class TaskService {
-    private final TaskRepository taskRepository;
+    private final TaskRepository taskRepo;
 
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public TaskService(TaskRepository taskRepo) {
+        this.taskRepo = taskRepo;
     }
 
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+    // get tasks for user
+    public List<Task> getTasks(String username) {
+        return taskRepo.findByOwnerUsername(username);
     }
 
-    public Optional<Task> getTaskById(String id) {
-        return taskRepository.findById(id);
+    // create
+    public Task createTask(String username, String title, String description, String status) {
+        Task t = new Task();
+        t.setOwnerUsername(username);
+        t.setTitle(title);
+        t.setDescription(description);
+        t.setStatus(status);
+        t.setCreatedAt(LocalDateTime.now());
+        return taskRepo.save(t);
     }
 
-    public Task createTask(Task task) {
-        // set creation time
-        task.setCreatedAt(LocalDateTime.now());
-        return taskRepository.save(task);
-    }
-
-    public Task updateTask(String id, Task updatedTask) {
-        return taskRepository.findById(id)
-                .map(existingTask -> {
-                    existingTask.setTitle(updatedTask.getTitle());
-                    existingTask.setDescription(updatedTask.getDescription());
-                    existingTask.setStatus(updatedTask.getStatus());
-                    // no need to update createdAt
-                    return taskRepository.save(existingTask);
-                })
+    // update
+    public Task updateTask(String username, String taskId, String title, String description, String status) {
+        Task existing = taskRepo.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
+        // check ownership
+        if (!existing.getOwnerUsername().equals(username)) {
+            throw new RuntimeException("Not authorized to update this task");
+        }
+        existing.setTitle(title);
+        existing.setDescription(description);
+        existing.setStatus(status);
+        return taskRepo.save(existing);
     }
 
-    public void deleteTask(String id) {
-        if (!taskRepository.existsById(id)) {
-            throw new RuntimeException("Task not found");
+    // delete
+    public void deleteTask(String username, String taskId) {
+        Task existing = taskRepo.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+        if (!existing.getOwnerUsername().equals(username)) {
+            throw new RuntimeException("Not authorized to delete this task");
         }
-        taskRepository.deleteById(id);
+        taskRepo.deleteById(taskId);
     }
 }

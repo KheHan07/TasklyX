@@ -1,46 +1,93 @@
 package com.taskmanager.taskmanager.controller;
 
-
 import com.taskmanager.taskmanager.model.Task;
 import com.taskmanager.taskmanager.service.TaskService;
+import com.taskmanager.taskmanager.util.JwtUtil;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
-
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/tasks")
-
+@CrossOrigin(origins = "*")
 public class TaskController {
+
     private final TaskService taskService;
-    public TaskController(TaskService taskService) {
+    private final JwtUtil jwtUtil;
+
+    public TaskController(TaskService taskService, JwtUtil jwtUtil) {
         this.taskService = taskService;
+        this.jwtUtil = jwtUtil;
     }
 
-    @GetMapping
-    public List<Task> getAllTasks() {
-        return taskService.getAllTasks();
+    // POST /api/tasks/all => { username, tokenid }
+    @PostMapping("/all")
+    public ResponseEntity<List<Task>> getAll(@RequestBody Map<String, String> body) {
+        String username = body.get("username");
+        String tokenid = body.get("tokenid");
+
+        // validate token
+        validateToken(username, tokenid);
+
+        // fetch tasks for user
+        List<Task> tasks = taskService.getTasks(username);
+        return ResponseEntity.ok(tasks);
     }
 
-    @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable String id) {
-        return taskService.getTaskById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+    // POST /api/tasks/create => { username, tokenid, title, description, status }
+    @PostMapping("/create")
+    public ResponseEntity<Task> createTask(@RequestBody Map<String, String> body) {
+        String username = body.get("username");
+        String tokenid = body.get("tokenid");
+        String title = body.get("title");
+        String description = body.get("description");
+        String status = body.get("status");
+
+        validateToken(username, tokenid);
+
+        Task created = taskService.createTask(username, title, description, status);
+        return ResponseEntity.ok(created);
     }
 
-    @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        return taskService.createTask(task);
+    // POST /api/tasks/update => { username, tokenid, taskId, title, description, status }
+    @PostMapping("/update")
+    public ResponseEntity<Task> updateTask(@RequestBody Map<String, String> body) {
+        String username = body.get("username");
+        String tokenid = body.get("tokenid");
+        String taskId = body.get("taskId");
+        String title = body.get("title");
+        String description = body.get("description");
+        String status = body.get("status");
+
+        validateToken(username, tokenid);
+
+        Task updated = taskService.updateTask(username, taskId, title, description, status);
+        return ResponseEntity.ok(updated);
     }
 
-    @PutMapping("/{id}")
-    public Task updateTask(@PathVariable String id, @RequestBody Task task) {
-        return taskService.updateTask(id, task);
+    // POST /api/tasks/delete => { username, tokenid, taskId }
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteTask(@RequestBody Map<String, String> body) {
+        String username = body.get("username");
+        String tokenid = body.get("tokenid");
+        String taskId = body.get("taskId");
+
+        validateToken(username, tokenid);
+
+        taskService.deleteTask(username, taskId);
+        return ResponseEntity.ok("Task deleted");
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable String id) {
-        taskService.deleteTask(id);
+    private void validateToken(String username, String tokenid) {
+        if (username == null || tokenid == null) {
+            throw new RuntimeException("Missing username/tokenid");
+        }
+        // decode token
+        String extractedUser = jwtUtil.validateTokenAndGetUsername(tokenid);
+        if (!extractedUser.equals(username)) {
+            throw new RuntimeException("Token does not match user");
+        }
     }
 }

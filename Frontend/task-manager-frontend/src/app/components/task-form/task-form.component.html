@@ -1,33 +1,23 @@
-
+<!-- task-form.component.html -->
 <h2>{{ isEditMode ? 'Edit Task' : 'Create Task' }}</h2>
 
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
   <div>
-    <label for="title">Title</label>
-    <input id="title" type="text" formControlName="title" />
-    <div
-      *ngIf="
-        taskForm.get('title')?.invalid &&
-        taskForm.get('title')?.touched
-      "
-    >
-      Title is required.
-    </div>
+    <label>Title</label>
+    <input formControlName="title" />
   </div>
-
   <div>
-    <label for="description">Description</label>
-    <textarea id="description" formControlName="description"></textarea>
+    <label>Description</label>
+    <textarea formControlName="description"></textarea>
   </div>
-
   <div>
-    <label for="status">Status</label>
-    <select id="status" formControlName="status">
+    <label>Status</label>
+    <select formControlName="status">
       <option value="TO_DO">TO DO</option>
       <option value="IN_PROGRESS">IN PROGRESS</option>
       <option value="DONE">DONE</option>
     </select>
   </div>
 
-  <button type="submit" [disabled]="taskForm.invalid">Save</button>
+  <button [disabled]="taskForm.invalid">{{ isEditMode ? 'Update' : 'Create' }}</button>
 </form>
