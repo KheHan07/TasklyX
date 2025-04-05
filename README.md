@@ -109,64 +109,65 @@ JWT Secret:
 ---
 Project Structure
 
-task-manager-app
-├── docker-compose.yml          # Docker Compose file for running MongoDB, backend, and frontend
-├── taskmanager                 # Spring Boot backend folder
-│   ├── Dockerfile              # Backend Dockerfile
-│   ├── pom.xml
-│   └── src
-│       └── main
-│           ├── java
-│           │   └── com
-│           │       └── taskmanager
-│           │           └── taskmanager
-│           │               ├── TaskmanagerApplication.java
-│           │               ├── model
-│           │               │   ├── User.java
-│           │               │   └── Task.java
-│           │               ├── repository
-│           │               │   ├── UserRepository.java
-│           │               │   └── TaskRepository.java
-│           │               ├── service
-│           │               │   └── TaskService.java
-│           │               ├── util
-│           │               │   └── JwtUtil.java
-│           │               └── controller
-│           │                   ├── AuthController.java
-│           │                   └── TaskController.java
-│           └── resources
-│               └── application.properties
-└── task-manager-frontend      # Angular frontend folder
-    ├── Dockerfile              # Frontend Dockerfile
-    ├── package.json
-    ├── angular.json
-    └── src
-        ├── main.ts
-        ├── index.html
-        ├── styles.css
-        └── app
-            ├── app.component.ts
-            ├── app.component.html
-            ├── app.component.css
-            ├── app.routes.ts
-            ├── services
-            │   ├── auth.service.ts
-            │   └── task.service.ts
-            └── components
-                ├── login
-                │   ├── login.component.ts
-                │   └── login.component.html
-                ├── register
-                │   ├── register.component.ts
-                │   └── register.component.html
-                ├── task-list
-                │   ├── task-list.component.ts
-                │   ├── task-list.component.html
-                │   └── task-list.component.css
-                └── task-form
-                    ├── task-form.component.ts
-                    ├── task-form.component.html
-                    └── task-form.component.css
+    task-manager-app
+    ├── docker-compose.yml          # Docker Compose file for running MongoDB, backend, and frontend
+    ├── taskmanager                 # Spring Boot backend folder
+    │   ├── Dockerfile              # Backend Dockerfile
+    │   ├── pom.xml
+    │   └── src
+    │       └── main
+    │           ├── java
+    │           │   └── com
+    │           │       └── taskmanager
+    │           │           └── taskmanager
+    │           │               ├── TaskmanagerApplication.java
+    │           │               ├── model
+    │           │               │   ├── User.java
+    │           │               │   └── Task.java
+    │           │               ├── repository
+    │           │               │   ├── UserRepository.java
+    │           │               │   └── TaskRepository.java
+    │           │               ├── service
+    │           │               │   └── TaskService.java
+    │           │               ├── util
+    │           │               │   └── JwtUtil.java
+    │           │               └── controller
+    │           │                   ├── AuthController.java
+    │           │                   └── TaskController.java
+    │           └── resources
+    │               └── application.properties
+    └── task-manager-frontend      # Angular frontend folder
+        ├── Dockerfile              # Frontend Dockerfile
+        ├── package.json
+        ├── angular.json
+        └── src
+            ├── main.ts
+            ├── index.html
+            ├── styles.css
+            └── app
+                ├── app.component.ts
+                ├── app.component.html
+                ├── app.component.css
+                ├── app.routes.ts
+                ├── services
+                │   ├── auth.service.ts
+                │   └── task.service.ts
+                └── components
+                    ├── login
+                    │   ├── login.component.ts
+                    │   └── login.component.html
+                    ├── register
+                    │   ├── register.component.ts
+                    │   └── register.component.html
+                    ├── task-list
+                    │   ├── task-list.component.ts
+                    │   ├── task-list.component.html
+                    │   └── task-list.component.css
+                    └── task-form
+                        ├── task-form.component.ts
+                        ├── task-form.component.html
+                        └── task-form.component.css
+
 
 Screenshots 
 
