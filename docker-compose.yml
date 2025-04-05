@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo
+    container_name: mongo_container
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./taskmanager
+    container_name: backend_container
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/task_manager_db
+      - JWT_SECRET=MY_SUPER_SECRET_KEY_1234567890123456
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./task-manager-frontend
+    container_name: frontend_container
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:

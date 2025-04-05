@@ -45,8 +45,8 @@
         </td>
         <td>{{ task.createdAt | date:'short' }}</td>
         <td>
-          <button (click)="editTask(task.id)">Edit</button>
-          <button (click)="deleteTask(task.id)">Delete</button>
+          <button class="db" (click)="editTask(task.id)">Edit</button>
+          <button class="db" (click)="deleteTask(task.id)">Delete</button>
         </td>
       </tr>
     </tbody>

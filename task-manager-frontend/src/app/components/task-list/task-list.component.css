@@ -116,7 +116,20 @@
   margin-right: 0.5rem;
   color: #666;
 }
-
+.db{
+  margin-left: 2px;
+  padding: 0.3rem 0.8rem;
+  color: #ffffff;
+  background-color: #1a73e8;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-color: #1a73e8;
+}
+.db:hover{
+  color: #1a73e8;
+  background-color: #ffffff;
+}
 .action-btn:hover {
   color: #000;
 }
@@ -133,7 +146,7 @@
 }
 
 .status-pill.pill-todo {
-  background-color: #3b82f6; /* Blue */
+  background-color: #fa4706; /* Blue */
 }
 
 .status-pill.pill-inprogress {
