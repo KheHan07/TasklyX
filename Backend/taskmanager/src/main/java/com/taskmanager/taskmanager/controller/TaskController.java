@@ -69,13 +69,15 @@ public class TaskController {
 
     // POST /api/tasks/delete => { username, tokenid, taskId }
     @PostMapping("/delete")
-    public ResponseEntity<?> deleteTask(@RequestBody Map<String, String> body) {
+    public ResponseEntity<String> deleteTask(@RequestBody Map<String, String> body) {
         String username = body.get("username");
         String tokenid = body.get("tokenid");
         String taskId = body.get("taskId");
 
+        // Validate token: throws exception if invalid
         validateToken(username, tokenid);
 
+        // Delete the task (throws exception if not found or unauthorized)
         taskService.deleteTask(username, taskId);
         return ResponseEntity.ok("Task deleted");
     }

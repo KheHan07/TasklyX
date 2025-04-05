@@ -1,22 +1,40 @@
-<!-- login.component.html -->
-<h2>Login</h2>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label>Username</label>
-    <input formControlName="username" />
-  </div>
-  <div>
-    <label>Password</label>
-    <input formControlName="password" type="password" />
-  </div>
-  <button type="submit" [disabled]="loginForm.invalid">Login</button>
-</form>
+<div class="auth-container">
+  <div class="auth-box">
+    <h2>Welcome Back</h2>
+    <p>Please enter your details to sign in</p>
 
-<div style="color:red" *ngIf="errorMessage">
-  {{ errorMessage }}
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          id="username"
+          formControlName="username"
+          placeholder="Enter your username"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          placeholder="Enter your password"
+        />
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="loginForm.invalid">
+        Sign In
+      </button>
+    </form>
+
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <p>
+      Don't have an account?
+      <a [routerLink]="['/register']">Register here</a>.
+    </p>
+  </div>
 </div>
-
-<p>
-  Don't have an account?
-  <a [routerLink]="['/register']">Register here</a>.
-</p>

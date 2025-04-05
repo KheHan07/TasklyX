@@ -1,16 +1,145 @@
+/* Overall container */
+.task-list-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
 
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 1rem;
-  }
-  
-  th, td {
-    border: 1px solid #ccc;
-    padding: 8px;
-  }
-  
-  select {
-    margin-left: 8px;
-  }
-  
+/* Top bar: Title + "New Task" button on the right */
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header-bar h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.btn-primary {
+  background-color: #1a73e8;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-primary:hover {
+  background-color: #1665c1;
+}
+
+/* Filters bar: for status filter + search box */
+.filters-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.filter-group {
+  font-size: 19px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.search-group input {
+  font-size: 19px;
+  width: 200px;
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* The main table */
+.task-table {
+  width: 100%;
+  table-layout: fixed; /* Ensures fixed column widths */
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  overflow: hidden; /* rounds the corners */
+}
+
+/* Table header */
+.task-table thead {
+  background-color: #f9fafb;
+}
+
+.task-table th,
+.task-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  vertical-align: top;
+}
+
+.task-table th {
+  font-weight: 600;
+  color: #555;
+}
+
+/* Set the Description column (2nd column) width */
+.task-table th:nth-child(2),
+.task-table td:nth-child(2) {
+  width: 30%;
+  max-width: 0;
+}
+
+/* Title and optional description */
+.task-title {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.task-desc {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* Action buttons */
+.action-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-right: 0.5rem;
+  color: #666;
+}
+
+.action-btn:hover {
+  color: #000;
+}
+
+/* Status pill */
+.status-pill {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.85rem;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-pill.pill-todo {
+  background-color: #3b82f6; /* Blue */
+}
+
+.status-pill.pill-inprogress {
+  background-color: #f59e0b; /* Amber/Orange */
+}
+
+.status-pill.pill-done {
+  background-color: #10b981; /* Green */
+}

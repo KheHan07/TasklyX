@@ -1,35 +1,54 @@
-<!-- src/app/components/task-list/task-list.component.html -->
-<h2>Task List</h2>
+<div class="task-list-container">
+  <div class="header-bar">
+    <h2>Task List</h2>
+    <button class="btn-primary" (click)="router.navigate(['/create-task'])">+ New Task</button>
+  </div>
 
-<label>Status Filter:</label>
-<select [(ngModel)]="selectedStatusFilter" (change)="filterTasks()">
-  <option value="">All</option>
-  <option value="TO_DO">TO DO</option>
-  <option value="IN_PROGRESS">IN PROGRESS</option>
-  <option value="DONE">DONE</option>
-</select>
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label for="statusFilter">Status:</label>
+      <select id="statusFilter" [(ngModel)]="selectedStatusFilter" (change)="filterTasks()">
+        <option value="">All Tasks</option>
+        <option value="TO_DO">To Do</option>
+        <option value="IN_PROGRESS">In Progress</option>
+        <option value="DONE">Done</option>
+      </select>
+    </div>
+    <div class="filter-group search-group">
+      <input
+        type="text"
+        placeholder="Search tasks..."
+        [(ngModel)]="searchText"
+        (input)="filterTasks()"
+      />
+    </div>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Status</th>
-      <th>Created At</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let task of filteredTasks">
-      <td>{{ task.title }}</td>
-      <td>{{ task.status }}</td>
-      <td>{{ task.createdAt | date:'short' }}</td>
-      <td>
-        <button (click)="editTask(task.id)">Edit</button>
-        <button (click)="deleteTask(task.id)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<button (click)="router.navigate(['/create-task'])">Create Task</button>
-
+  <table class="task-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of filteredTasks">
+        <td>{{ task.title }}</td>
+        <td>{{ task.description || '-' }}</td>
+        <td>
+          <span class="status-pill" [ngClass]="getStatusClass(task.status)">
+            {{ getStatusLabel(task.status) }}
+          </span>
+        </td>
+        <td>{{ task.createdAt | date:'short' }}</td>
+        <td>
+          <button (click)="editTask(task.id)">Edit</button>
+          <button (click)="deleteTask(task.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

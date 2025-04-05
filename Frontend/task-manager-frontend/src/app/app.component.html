@@ -1,6 +1,7 @@
-<h1>Task Manager</h1>
+<h1>Taskly X</h1>
+<h3>Start managing your tasks efficiently</h3>
 <nav>
-  <button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+  <button *ngIf="isLoggedIn()" class="btn-primary" (click)="logout()">Logout</button>
 </nav>
 <hr />
 <router-outlet></router-outlet>

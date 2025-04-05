@@ -1,8 +1,102 @@
+/* Centers the card in the middle of the screen with a light gray background */
+.task-form-container {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  display: flex;
+  justify-content: center;
+  min-height: 45vh;
+  background-color: #e3e8eb;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
 
-form {
-    display: flex;
-    flex-direction: column;
-    max-width: 400px;
-    gap: 1rem;
-  }
-  
+/* The card itself */
+.task-form-card {
+  background-color: #fff;
+  padding: 1.5rem;
+  width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+/* Main heading */
+.task-form-card h1 {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+/* Subheading */
+.task-form-card p {
+  margin-bottom: 1.5rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Form group styles */
+.form-group {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Button row for alignment */
+.button-row {
+  margin-top: 1.5rem;
+  text-align: right; /* or center if you want the button centered */
+}
+
+/* Primary button */
+.btn-primary {
+  background-color: #1a73e8;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #1665c1;
+}
+.btn-back {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  color: #1a73e8;
+}
+
+.btn-back:hover {
+  color: #050c3f;
+}

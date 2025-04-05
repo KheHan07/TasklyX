@@ -1,23 +1,54 @@
-<!-- task-form.component.html -->
-<h2>{{ isEditMode ? 'Edit Task' : 'Create Task' }}</h2>
+<div class="task-form-container">
+  <div class="task-form-card">
+    <button class="btn-back" (click)="goBack()">← Back</button>
+    <h1>{{ isEditMode ? 'Edit Task' : 'Create New Task' }}</h1>
+    <p>
+      {{ isEditMode
+        ? 'Update the fields below to edit the existing task.'
+        : 'Fill in the details below to create a new task.' }}
+    </p>
 
-<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label>Title</label>
-    <input formControlName="title" />
-  </div>
-  <div>
-    <label>Description</label>
-    <textarea formControlName="description"></textarea>
-  </div>
-  <div>
-    <label>Status</label>
-    <select formControlName="status">
-      <option value="TO_DO">TO DO</option>
-      <option value="IN_PROGRESS">IN PROGRESS</option>
-      <option value="DONE">DONE</option>
-    </select>
-  </div>
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <!-- Title Field -->
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          id="title"
+          formControlName="title"
+          placeholder="Enter task title"
+        />
+      </div>
 
-  <button [disabled]="taskForm.invalid">{{ isEditMode ? 'Update' : 'Create' }}</button>
-</form>
+      <!-- Description Field -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Enter task description"
+        ></textarea>
+      </div>
+
+      <!-- Status Field -->
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" formControlName="status">
+          <option value="TO_DO">TO DO</option>
+          <option value="IN_PROGRESS">IN PROGRESS</option>
+          <option value="DONE">DONE</option>
+        </select>
+      </div>
+
+      <!-- Action Button -->
+      <div class="button-row">
+        <button
+          class="btn-primary"
+          type="submit"
+          [disabled]="taskForm.invalid"
+        >
+          {{ isEditMode ? 'Update Task' : 'Create Task' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

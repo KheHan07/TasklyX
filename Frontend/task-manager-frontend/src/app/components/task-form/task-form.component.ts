@@ -14,7 +14,8 @@ import { TaskService, Task } from '../../services/task.service';
   selector: 'app-task-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './task-form.component.html'
+  templateUrl: './task-form.component.html',
+  styleUrls: ['./task-form.component.css']
 })
 export class TaskFormComponent implements OnInit {
   taskForm!: FormGroup;
@@ -76,5 +77,8 @@ export class TaskFormComponent implements OnInit {
         error: err => console.error('Create error', err)
       });
     }
+  }
+  goBack(): void {
+    this.router.navigate(['/tasks']);
   }
 }

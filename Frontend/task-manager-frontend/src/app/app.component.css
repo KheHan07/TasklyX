@@ -1,4 +1,37 @@
-/* src/app/app.component.css */
-h1 {
+
+h1{
   text-align: center;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-weight: 800;
+  font-size: 50px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  color: rgb(17, 17, 141);
+}
+h3 {
+  margin-top: 2px;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-weight: 500;
+  color: rgb(9, 9, 72);
+  letter-spacing: 2px;
+}
+.btn-primary {
+  background-color: #1a73e8;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #1665c1;
+}
+nav {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 1rem;
 }

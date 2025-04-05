@@ -50,12 +50,15 @@ export class TaskService {
     return this.http.post<Task>(`${this.baseUrl}/update`, body);
   }
 
-  deleteTask(id: string): Observable<any> {
+  deleteTask(id: string): Observable<string> {
     const body = {
       username: this.auth.getUsername(),
       tokenid: this.auth.getTokenid(),
       taskId: id
     };
-    return this.http.post(`${this.baseUrl}/delete`, body);
+    // Specify responseType as 'text' so that Angular parses the plain text response correctly,
+    // then cast the result to Observable<string>
+    return this.http
+      .post(`${this.baseUrl}/delete`, body, { responseType: 'text' as 'json' }) as Observable<string>;
   }
 }
